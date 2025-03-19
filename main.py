@@ -8,6 +8,7 @@ def loop():
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
+    # check for button inputs for actions
     pass
 
 if __name__ == "__main__":
