@@ -1,0 +1,39 @@
+Code for raspberry pi
+
+-> Code for INA226 measuring capabilities(Needs to measure current and voltage 12V - 48V + 5A - 10A )
+-> Code for Screen info (I2C LCD Display)
+-> Code for button (Overlaps with screen code)
+-> Code for buzzer = error (Overlaps with screen code)
+-> Code for LED functionality (Overlaps with screen code)
+
+Plan: 
+
+First we need to outline the code for the INA226 module 
+
+Then, we need to place code in place to allow for customizability for other purposes.
+
+Code for INA219 online -> Unsure if it will work; Need to test somehow. 
+
+Could use a virtual machine to test setup code; Not able to test INA226 Functionality however :/
+
+I guess making template code is the only option for now. 
+
+Template Code Help: (Basically use temporary local python modules with the same name for testing purposes)
+
+However you could write your own with not very much effort. How many different calls do you make to the gpio functions? You might find you use less than 10. Just create your own local Python module named the same as your target module and produce stubs for the functions you use.
+
+E.g. if you use function gpio_write() which takes a gpio and a level your stub could just be
+
+def gpio_write(gpio, level):
+   print("gpio_write called with gpio={} level={}".format(gpio, level))
+
+Your gpio_read stub could be
+
+def gpio_read(gpio):
+   global val
+   print("gpio_read called with gpio={}, returning {}".format(gpio, val))
+   return val # where val may be read from a file or set externally
+
+This is a fairly standard practice, long used in software development to test software before hardware is available.
+
+template functions -> INA226 constructor
