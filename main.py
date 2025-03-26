@@ -1,5 +1,7 @@
 from INA226 import get_values
 from LCD import LCD 
+import filewriter
+import datetime
 
 def setup():
     lcd = LCD()
@@ -13,8 +15,9 @@ def loop():
     # sleep for an unspecified amount of time
 
     values = get_values() # gets the values from the INA
-    lcd.write_to_lcd(0, 0, "Halloo :3 !!!") # writes to LCD display
-    
+    lcd.write_to_lcd(0, 0, values[0] + "V") # writes values to LCD display
+    lcd.write_to_lcd(1, 0, values[1] + "mV");
+    data = datetime.datetime.now() +  " " + values[0] + " " + values[1]
 
 if __name__ == "__main__":
     try:
