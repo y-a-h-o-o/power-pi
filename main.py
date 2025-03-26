@@ -16,7 +16,7 @@ def loop():
 
     values = get_values() # gets the values from the INA
     lcd.write_to_lcd(0, 0, values[0] + "V") # writes values to LCD display
-    lcd.write_to_lcd(1, 0, values[1] + "mV");
+    lcd.write_to_lcd(1, 0, values[1] + "mA");
     data = datetime.datetime.now() +  " " + values[0] + " " + values[1]
 
 if __name__ == "__main__":
