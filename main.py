@@ -19,7 +19,7 @@ def loop():
     lcd.write_to_lcd(1, 0, values[1] + "mA");
     data = datetime.datetime.now() +  " " + values[0] + " " + values[1]
     filewriter.write_to_file(data);
-
+    sleep(1000)
 if __name__ == "__main__":
     try:
         setup() 
