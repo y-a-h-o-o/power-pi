@@ -1,7 +1,7 @@
 import LCD1602
 import time 
 
-class LCD(self):
+class LCD:
     def __init__(self):
         LCD1602.init(0x27, 1); # whatever slave adress we need, and we need a background light probabaly 
         LCD1602.write(0, 0, 'Starting')
@@ -9,5 +9,5 @@ class LCD(self):
         time.sleep(2)
     
     def write_to_lcd(row, col, text): # writes a string to the LCD display based on the specified row and column
-            LCD1602.write(row, col, test)
+            LCD1602.write(row, col, text)
 
