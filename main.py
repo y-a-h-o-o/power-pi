@@ -18,6 +18,7 @@ def loop():
     lcd.write_to_lcd(0, 0, values[0] + "V") # writes values to LCD display
     lcd.write_to_lcd(1, 0, values[1] + "mA");
     data = datetime.datetime.now() +  " " + values[0] + " " + values[1]
+    filewriter.write_to_file(data);
 
 if __name__ == "__main__":
     try:
