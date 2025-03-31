@@ -17,11 +17,9 @@ alarm_btn = Button(3)
 bz = Buzzer(4)
 
 # trailing average list and variable declaration
-voltage_average = 0
-current_average = 0
-counter = 0
-voltage_total
-current_total
+counter = 1
+avg_voltage = 0
+avg_current = 0
 
 def loop(): 
     # check for button inputs for actions and then do something
@@ -29,9 +27,6 @@ def loop():
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
-
-    # incrementing counter variable to later calculate data averages
-     counter+=1
 
     # turn off alarm manually when this button is pressed
     if alarm_btn.is_pressed: 
@@ -44,11 +39,9 @@ def loop():
 
     # updating current & voltage data and averages
     current = values[0] 
-    current_total+=current
     current_average = current_total/counter
     
     voltage = values[1]
-    voltage_total+=voltage   
     voltage_average = voltage_total/counter
 
     # Moves file to USB if stick is inserted
@@ -65,8 +58,8 @@ def loop():
             data = str(datetime.datetime.now()) +  " " + str(voltage) + " " + str(current)
             write_to_file(data);
 
-    # Loop has a default interval of one second, meaning data measurements take place at one second intervals
-    time.sleep(1)
+    # Log data at 15 second intervals
+    time.sleep(15)
 
 if __name__ == "__main__":
     try:
