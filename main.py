@@ -11,11 +11,10 @@ import os
 lcd = LCD(2, 0x3F, True)
 
 # button setup
-# replace the numbers in brackets with which ever gpio pin the components are connected to
-wait_btn = Button(2) 
-alarm_btn = Button(3)
-bz = Buzzer(4)
-led = LED(5)
+wait_btn = Button(4) 
+alarm_btn = Button(17)
+bz = Buzzer(27)
+led = LED(22)
 
 # trailing average list and variable declaration
 counter = 1
