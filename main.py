@@ -17,6 +17,7 @@ alarm_btn = Button(3)
 bz = Buzzer(4)
 
 # trailing average list and variable declaration
+# take average of last 15 values
 counter = 1
 avg_voltage = 0
 avg_current = 0
@@ -27,22 +28,20 @@ def loop():
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
-
+   
     # turn off alarm manually when this button is pressed
     if alarm_btn.is_pressed: 
         bz.off()
-    
-    values = get_values() # gets the values from the INA
-    
-    lcd.message("Current: " + str(values[0]), 1)
-    lcd.message("Voltage: " + str(values[1]), 2)
+   
+    # gets the values from the INA
+    values = get_values()     
 
-    # updating current & voltage data and averages
-    current = values[0] 
-    current_average = current_total/counter
-    
-    voltage = values[1]
-    voltage_average = voltage_total/counter
+    # display to LCD
+    lcd.message("Current: " + str(values[1]), 1)
+    lcd.message("Voltage: " + str(values[0]), 2)
+   
+    voltage = values[0]
+    current = values[1]
 
     # Moves file to USB if stick is inserted
     if not wait_btn.is_pressed:
@@ -55,11 +54,21 @@ def loop():
             lcd.message("FILE MOVED", 1)
             lcd.message("UNPLUG USB", 2)
         else:
-            data = str(datetime.datetime.now()) +  " " + str(voltage) + " " + str(current)
-            write_to_file(data);
+            if counter % 16 == 0: 
+                avg_voltage /= 15 
+                avg_current /= 15 
+                data = str(datetime.datetime.now()) +  " " + str(avg_voltage) + " " + str(avg_current)
+                write_to_file(data);
+                avg_voltage = 0
+                avg_current = 0
+            else:
+                counter += 1
+                avg_voltage += voltage
+                avg_current += current
 
-    # Log data at 15 second intervals
-    time.sleep(15)
+    # run loop every second; current will display every second but, every 15 readings we log the average
+    # this ensures that more accurate values are stored if power fluctuates
+    time.sleep(1)
 
 if __name__ == "__main__":
     try:
