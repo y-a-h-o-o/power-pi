@@ -45,10 +45,11 @@ def loop():
     if not wait_btn.is_pressed: 
         lcd.message("CURRENT: " + str(values[1]), 1)
         lcd.message("VOLTAGE: " + str(values[0]), 2)
-
+    
     voltage = values[0]
     current = values[1]
     
+    # alarm will sound if less than 12.0 volts; Outside expected range
     if voltage < 12.0: 
         bz.on()
         red_led.on()
