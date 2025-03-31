@@ -9,6 +9,8 @@ import os
 # LCD setup
 # first parameter should always be 2. Use i2cdetect -y 0 to find I2C address. last param is for backlight 
 lcd = LCD(2, 0x3F, True)
+
+# LCD confirmation
 lcd.message("POWER ON", 1)
 lcd.message("SETUP...", 2)
 
@@ -19,6 +21,7 @@ bz = Buzzer(27)
 green_led = LED(22)
 red_led = LED(18)
 
+# Green LED to tell whether device is ON
 green_led.on()
 
 # trailing average list and variable declaration
