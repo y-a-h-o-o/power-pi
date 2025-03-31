@@ -12,18 +12,26 @@ lcd = LCD(2, 0x3F, True)
 
 # button setup
 # replace the numbers in brackets with which ever gpio pin the components are connected to
-
 wait_btn = Button(2) 
 alarm_btn = Button(3)
 bz = Buzzer(4)
 
+# trailing average list and variable declaration
+voltage_average = 0
+current_average = 0
+counter = 0
+voltage_total
+current_total
+
 def loop(): 
-    
     # check for button inputs for actions and then do something
     # here will be an infinite loop until something happens, but during it we will
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
+
+    # incrementing counter variable to later calculate data averages
+     counter+=1
 
     # turn off alarm manually when this button is pressed
     if alarm_btn.is_pressed: 
@@ -33,10 +41,17 @@ def loop():
     
     lcd.message("Current: " + str(values[0]), 1)
     lcd.message("Voltage: " + str(values[1]), 2)
-        
-    voltage = values[0]
-    current = values[1] 
+
+    # updating current & voltage data and averages
+    current = values[0] 
+    current_total+=current
+    current_average = current_total/counter
     
+    voltage = values[1]
+    voltage_total+=voltage   
+    voltage_average = voltage_total/counter
+
+    # Moves file to USB if stick is inserted
     if not wait_btn.is_pressed:
         usb_path = check_usb()
         if usb_path:
@@ -49,6 +64,8 @@ def loop():
         else:
             data = str(datetime.datetime.now()) +  " " + str(voltage) + " " + str(current)
             write_to_file(data);
+
+    # Loop has a default interval of one second, meaning data measurements take place at one second intervals
     time.sleep(1)
 
 if __name__ == "__main__":
