@@ -1,7 +1,17 @@
-TODO: Add requrired libraries for raspberry pi 
-
-sudo raspi-config
-sudo pip install adafruit-blinka
-sudo pip install adafruit-charlcd
-sudo pip install adafruit-circuitpython-ina228
-
+Adafruit-Blinka==8.56.0
+adafruit-circuitpython-busdevice==5.2.11
+adafruit-circuitpython-connectionmanager==3.1.3
+adafruit-circuitpython-ina228==1.0.0
+adafruit-circuitpython-register==1.10.2
+adafruit-circuitpython-requests==4.1.10
+adafruit-circuitpython-typing==1.11.2
+Adafruit-PlatformDetect==3.77.0
+Adafruit-PureIO==1.1.11
+Adafruit_CharLCD==1.1.1
+Adafruit_GPIO==1.0.3
+binho-host-adapter==0.1.6
+pyftdi==0.56.0
+pyserial==3.5
+pyusb==1.3.1
+setuptools==78.1.0
+typing_extensions==4.13.0

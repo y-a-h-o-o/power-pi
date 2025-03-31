@@ -1,0 +1,26 @@
+To run the code properly you must do:
+
+sudo apt-get install i2c-tools
+sudo apt-get install python-smbus
+
+Then you must enable I2C, though 
+
+sudo raspi-config Advanced Options > I2C > Enable
+
+Finally, to determine the I2C Address, 
+
+i2cdetect -y 0
+
+We also need the proper libraries 
+
+pip install adafruit-blinka
+pip install adafruit-charlcd
+pip install adafrut-circuitpython-ina228
+
+also if there is no module named pkg_resources, do 
+
+pip install setuptools
+
+For the buttons we need RGPIO, 
+
+sudo apt-get install python-rpi.gpio python3-rpi.gpio

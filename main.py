@@ -1,10 +1,20 @@
-from INA226 import get_values
-from LCD import LCD 
-import filewriter
+from components.INA228 import get_values
+from components.LCD import LCD 
+from data_logging.filewriter import write_to_file
+import RPi.GPIO as GPIO
 import datetime
+import time
 
-def setup():
-    lcd = LCD()
+#LCD setup
+# first parameter should always be 2. Use i2cdetect -y 0 to find I2C address. last param is for backlight 
+lcd = LCD(2, 0x3F, True)
+
+#GPIO setup
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN);
+# GPIO.setup(9, GPIO.IN, pull_up_down=GPIO.PUD_DOWN); 
+# GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN); 
 
 def loop(): 
     
@@ -13,17 +23,33 @@ def loop():
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
+    
+    button_state1 = GPIO.input(10)
+    # button_state2 = GPIO.input(9)
+    # button_state3 = GPIO.input(8)
 
+    if button_state1 == True: 
+        return  #skip reading and writing values while this button is held
+    
     values = get_values() # gets the values from the INA
-    lcd.write_to_lcd(0, 0, values[0] + "V") # writes values to LCD display
-    lcd.write_to_lcd(1, 0, values[1] + "mA");
-    data = datetime.datetime.now() +  " " + values[0] + " " + values[1]
-    filewriter.write_to_file(data);
-    sleep(1000)
+    
+    lcd.message("Current: " + values[0], 1)
+    lcd.message("Voltage: " + values[1], 2)
+    
+    print("Displaying data on LCD Display")
+        
+    voltage = values[0]
+    current = values[1] 
+    
+    data = str(datetime.datetime.now()) +  " " + str(voltage) + " " + str(current)
+    write_to_file(data);
+   
+    time.sleep(1)
+
 if __name__ == "__main__":
     try:
-        setup() 
         while(True):
             loop()
     except KeyboardInterrupt:
-        destroy()
+        print("Exiting...")
+        GPIO.cleanup()
