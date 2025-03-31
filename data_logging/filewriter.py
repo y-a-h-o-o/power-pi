@@ -4,8 +4,9 @@ import datetime
 import shutil
 
 def check_usb():
+
     # change this path based on user name of raspberry pi
-    media_path = "/media/pi/"
+    media_path = "/media/sajjadnaqvi/"
 
     # get all folders in this directory
     all_items = os.listdir(media_path)

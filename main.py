@@ -1,7 +1,7 @@
 from components.INA228 import get_values
 from components.LCD import LCD
 from data_logging.filewriter import *
-from gpiozero import Button, Buzzer
+from gpiozero import Button, Buzzer, LED
 import datetime
 import time
 import os
@@ -15,9 +15,9 @@ lcd = LCD(2, 0x3F, True)
 wait_btn = Button(2) 
 alarm_btn = Button(3)
 bz = Buzzer(4)
+led = LED(5)
 
 # trailing average list and variable declaration
-# take average of last 15 values
 counter = 1
 avg_voltage = 0
 avg_current = 0
@@ -42,6 +42,11 @@ def loop():
    
     voltage = values[0]
     current = values[1]
+    
+    if voltage < 12.0: 
+        bz.on()
+    else:
+        bz.off()
 
     # Moves file to USB if stick is inserted
     if not wait_btn.is_pressed:
@@ -54,7 +59,7 @@ def loop():
             lcd.message("FILE MOVED", 1)
             lcd.message("UNPLUG USB", 2)
         else:
-            if counter % 16 == 0: 
+            if counter % 16 == 0: # if 15 values are read, write the average of them to file 
                 avg_voltage /= 15 
                 avg_current /= 15 
                 data = str(datetime.datetime.now()) +  " " + str(avg_voltage) + " " + str(avg_current)
