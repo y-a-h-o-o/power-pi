@@ -9,7 +9,7 @@ sudo raspi-config Advanced Options > I2C > Enable
 
 Finally, to determine the I2C Address, 
 
-i2cdetect -y 0
+i2cdetect -y
 
 We also need the proper libraries 
 
@@ -20,7 +20,3 @@ pip install adafrut-circuitpython-ina228
 also if there is no module named pkg_resources, do 
 
 pip install setuptools
-
-For the buttons we need RGPIO, 
-
-sudo apt-get install python-rpi.gpio python3-rpi.gpio

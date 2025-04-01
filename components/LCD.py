@@ -2,7 +2,7 @@ import smbus
 import time
 
 class LCD:
-    def __init__(self, pi_rev = 2, i2c_addr = 0x3F, backlight = True):
+    def __init__(self, i2c_addr = 0x3F, backlight = True):
 
         # device constants
         self.I2C_ADDR  = i2c_addr
@@ -26,16 +26,9 @@ class LCD:
         # Timing constants
         self.E_PULSE = 0.0005
         self.E_DELAY = 0.0005
-
-        # Open I2C interface
-        if pi_rev == 2:
-            # Rev 2 Pi uses 1
-            self.bus = smbus.SMBus(1)
-        elif pi_rev == 1:
-            # Rev 1 Pi uses 0
-            self.bus = smbus.SMBus(0)
-        else:
-            raise ValueError('pi_rev param must be 1 or 2')
+        
+        # Value for I2C Bus is 2
+        self.bus = smbus.SMBus(2)
 
         # Initialise display
         self.lcd_byte(0x33, self.LCD_CMD) # 110011 Initialise

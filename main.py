@@ -7,8 +7,8 @@ import time
 import os
 
 # LCD setup
-# first parameter should always be 2. Use i2cdetect -y 0 to find I2C address. last param is for backlight 
-lcd = LCD(2, 0x3F, True)
+# Use i2cdetect -y 0 to find I2C address. last param is for backlight 
+lcd = LCD(0x3F, True)
 
 # LCD confirmation
 lcd.message("POWER ON", 1)
@@ -46,9 +46,9 @@ def loop():
 
     # display to LCD; if freezing screen, don't change the message on LCD
     if not wait_btn.is_pressed: 
-        lcd.message("CURRENT: " + str(values[1]), 1)
-        lcd.message("VOLTAGE: " + str(values[0]), 2)
-    
+        lcd.message("VOLTAGE: " + str(values[0]), 1)
+        lcd.message("CURRENT: " + str(values[1]), 2)
+ 
     voltage = values[0]
     current = values[1]
     
