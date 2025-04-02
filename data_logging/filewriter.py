@@ -6,7 +6,7 @@ import shutil
 def check_usb():
 
     # change this path based on user name of raspberry pi
-    media_path = "/media/sajjadnaqvi/"
+    media_path = "/media/pi/"
 
     # get all folders in this directory
     all_items = os.listdir(media_path)

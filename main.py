@@ -6,6 +6,8 @@ import datetime
 import time
 import os
 
+if os.path.exists("./data.txt"):
+    os.remove("./data.txt")
 # LCD setup
 # Use i2cdetect -y 0 to find I2C address. last param is for backlight 
 lcd = LCD(0x3F, True)
@@ -35,7 +37,11 @@ def loop():
     # read and output the current voltage and current and time 
     # write the data onto a file
     # sleep for an unspecified amount of time
-   
+    
+    global counter
+    global avg_voltage
+    global avg_current
+
     # turn off alarm manually when this button is pressed
     if alarm_btn.is_pressed: 
         bz.off()
@@ -76,7 +82,7 @@ def loop():
             avg_voltage /= 15 
             avg_current /= 15 
             data = str(datetime.datetime.now()) +  " " + str(avg_voltage) + " " + str(avg_current)
-            write_to_file(data);
+            log_data(data);
             avg_voltage = 0
             avg_current = 0
         else:
